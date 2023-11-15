@@ -15,7 +15,7 @@ services:
     env_file:
       - .env
     restart: always
-    command: poetry run uvicorn app.__main__:app --host 0.0.0.0 --port ${APP_PORT} --reload
+    command: poetry run uvicorn app.main:app --host 0.0.0.0 --port ${APP_PORT} --reload
     depends_on:
       - db
 
@@ -27,3 +27,6 @@ services:
     env_file:
       - .env
     restart: always
+
+volumes:
+  mongo_data:
