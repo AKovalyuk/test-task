@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     APP_PORT: int = int(getenv('APP_PORT', 8000))
 
     # Database settings
-    MONGO_USERNAME: str = getenv('MONGO_INITDB_ROOT_USERNAME', 'user')
-    MONGO_PASSWORD: str = getenv('MONGO_INITDB_ROOT_PASSWORD', '12345')
+    MONGO_INITDB_ROOT_USERNAME: str = getenv('MONGO_INITDB_ROOT_USERNAME', 'user')
+    MONGO_INITDB_ROOT_PASSWORD: str = getenv('MONGO_INITDB_ROOT_PASSWORD', '12345')
     MONGO_DATABASE: str = getenv('MONGO_DATABASE', 'templates')
     MONGO_HOST: str = getenv('MONGO_HOST', 'db')
     MONGO_PORT: int = int(getenv('MONGO_PORT', 27017))
