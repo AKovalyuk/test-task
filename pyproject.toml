@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "test-task"
+version = "0.1.0"
+description = ""
+authors = ["Alex Kovalyuk <nehochubanan@gmail.com>"]
+readme = "README.md"
+packages = [{include = "test_task"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.104.1"
+pytest = "^7.4.3"
+pylint = "^3.0.2"
+pydantic-settings = "^2.1.0"
+motor = "^3.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
