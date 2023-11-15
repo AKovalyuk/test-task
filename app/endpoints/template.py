@@ -2,9 +2,12 @@ from typing import Annotated
 
 from fastapi import APIRouter, Path, Query, Request, Depends, Body
 from starlette import status
+from pymongo.client_session import ClientSession
 
 from app.dependencies import Pagination, pagination_dependency
 from app.schemas import TemplateOut, TemplateIn, TemplateMatchSuccess, FieldType
+from app.dependencies import get_session
+from app.db import insert_object, get_object, get_objects, delete_object
 
 
 router = APIRouter(
@@ -28,6 +31,7 @@ async def get_form(request: Request):
 )
 async def get_templates(
         pagination: Annotated[Pagination, Depends(pagination_dependency)],
+        session: Annotated[ClientSession, Depends(get_session)],
 ) -> list[TemplateOut]:
     ...
 
@@ -38,6 +42,7 @@ async def get_templates(
 )
 async def get_template(
         template_id: Annotated[str, Path()],  # ObjectId
+        session: Annotated[ClientSession, Depends(get_session)],
 ) -> TemplateOut:
     ...
 
@@ -48,6 +53,7 @@ async def get_template(
 )
 async def create_template(
         template_data: Annotated[TemplateIn, Body()],
+        session: Annotated[ClientSession, Depends(get_session)],
 ) -> TemplateOut:
     ...
 
@@ -58,5 +64,6 @@ async def create_template(
 )
 async def delete_template(
         template_id: Annotated[str, Path()],
+        session: Annotated[ClientSession, Depends(get_session)],
 ):
     ...
