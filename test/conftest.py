@@ -1,8 +1,10 @@
+from asyncio import get_event_loop_policy
+
 from pytest import fixture
 from httpx import AsyncClient
 
 from app.config import settings
-from app.db import client as db_client
+from app.db import collection
 from app.main import app
 
 
@@ -12,10 +14,20 @@ pytest_plugins = [
 
 
 @fixture(scope='session')
+def event_loop():
+    policy = get_event_loop_policy()
+    loop = policy.new_event_loop()
+    yield loop
+    loop.close()
+
+
+@fixture(scope='session')
 def db():
     settings.MONGO_DATABASE = 'test_db'
-    yield
-    db_client.drop_database(settings.MONGO_DATABASE)
+    try:
+        yield
+    finally:
+        collection.delete_many({})
 
 
 @fixture(scope='session')
