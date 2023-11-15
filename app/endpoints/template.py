@@ -2,7 +2,6 @@ from typing import Annotated
 
 from fastapi import APIRouter, Path, Query, Request, Depends, Body, HTTPException
 from starlette import status
-from pymongo.client_session import ClientSession
 
 from app.dependencies import Pagination, pagination_dependency
 from app.schemas import TemplateOut, TemplateIn, TemplateMatchSuccess, FieldType

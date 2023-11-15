@@ -6,6 +6,9 @@ authors = ["Alex Kovalyuk <nehochubanan@gmail.com>"]
 readme = "README.md"
 packages = [{include = "test_task"}]
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.104.1"
@@ -15,6 +18,9 @@ pydantic-settings = "^2.1.0"
 motor = "^3.3.2"
 uvicorn = "^0.24.0.post1"
 pymongo = {extras = ["srv"], version = "^4.6.0"}
+httpx = "^0.25.1"
+pytest-asyncio = "^0.21.1"
+pytest-aiohttp = "^1.0.5"
 
 
 [build-system]
