@@ -1,3 +1,4 @@
+# pylint: disable=missing-class-docstring
 from typing import Dict, Literal, Any, Annotated
 
 from pydantic import BaseModel, Field, field_validator, AfterValidator
@@ -5,6 +6,7 @@ from bson import ObjectId as _ObjectId
 
 
 def validate_object_id(value: str) -> str:
+    """Функция для превращения строки в ObjectId"""
     if not _ObjectId.is_valid(value):
         raise ValueError('Invalid ObjectId')
     return value

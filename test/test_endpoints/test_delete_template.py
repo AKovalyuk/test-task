@@ -1,3 +1,4 @@
+# pylint: disable=missing-function-docstring, unused-argument
 from pytest import mark
 from bson import ObjectId
 

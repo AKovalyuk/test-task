@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Path, Query, Request, Depends, Body, HTTPException
+from fastapi import APIRouter, Path, Request, Depends, Body, HTTPException
 from starlette import status
 
 from app.dependencies import Pagination, pagination_dependency
@@ -20,7 +20,7 @@ router = APIRouter(
     response_model=TemplateMatchSuccess | dict[str, FieldType],
 )
 async def get_form(request: Request):
-    for param_name, param_value in request.query_params.items():
+    for _, param_value in request.query_params.items():
         if param_value not in ['email', 'text', 'phone', 'date']:
             raise HTTPException(status_code=422)
     obj = template_match(list(request.query_params.items()), collection)
