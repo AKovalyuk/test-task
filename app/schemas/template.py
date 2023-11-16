@@ -15,8 +15,15 @@ ObjectId = Annotated[str, AfterValidator(validate_object_id)]
 
 
 class TemplateMatchSuccess(BaseModel):
-    id: str
+    id: str = Field(validation_alias='_id')
     name: str
+
+    @field_validator('id', mode='before')
+    @classmethod
+    def transform_id(cls, v: Any) -> str:
+        if not isinstance(v, str):
+            v = str(v)
+        return v
 
 
 class TemplateIn(BaseModel):
