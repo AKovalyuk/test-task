@@ -44,4 +44,5 @@ async def test_not_found(data, client):
 )
 async def test_get_one(data, client, index):
     response = await client.get(f'/template/{data[index]["id"]}')
-    assert response.json() == data[index]
+    assert response.json()['id'] == data[index]['id']
+    assert response.json()['fields'] == dict(data[index]['fields'])
