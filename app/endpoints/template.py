@@ -41,7 +41,7 @@ async def get_templates(
     status_code=status.HTTP_200_OK,
 )
 async def get_template(
-        template_id: Annotated[str, Path()],  # ObjectId
+        template_id: Annotated[str, Path(di)],  # ObjectId
 ) -> TemplateOut:
     found_object = get_object(template_id, collection)
     if not found_object:

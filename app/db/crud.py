@@ -20,4 +20,4 @@ def get_objects(
         page_number: int,
         collection: Collection
 ) -> Cursor:
-    return collection.find({}).limit(page_size).limit((page_number - 1) * page_size)
+    return collection.find({}).limit(page_size).skip((page_number - 1) * page_size)
