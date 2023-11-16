@@ -1,5 +1,6 @@
 # pylint: disable=missing-class-docstring
 from typing import Dict, Literal, Any, Annotated
+from enum import Enum
 
 from pydantic import BaseModel, Field, field_validator, AfterValidator
 from bson import ObjectId as _ObjectId
@@ -12,7 +13,17 @@ def validate_object_id(value: str) -> str:
     return value
 
 
-FieldType = Literal["email", "phone", "date", "text"]
+class FieldType(str, Enum):
+    DATE = 'date'
+    PHONE = 'phone'
+    EMAIL = 'email'
+    TEXT = 'text'
+
+    @classmethod
+    def contains(cls, value):
+        return value in cls.__members__.values()
+
+
 ObjectId = Annotated[str, AfterValidator(validate_object_id)]
 
 

@@ -21,6 +21,7 @@ pymongo = {extras = ["srv"], version = "^4.6.0"}
 httpx = "^0.25.1"
 pytest-asyncio = "^0.21.1"
 pytest-aiohttp = "^1.0.5"
+pydantic = {extras = ["email"], version = "^2.5.1"}
 
 
 [build-system]

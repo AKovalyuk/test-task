@@ -6,6 +6,7 @@ from starlette import status
 from app.dependencies import Pagination, pagination_dependency
 from app.schemas import TemplateOut, TemplateIn, TemplateMatchSuccess, FieldType, ObjectId
 from app.db import insert_object, get_object, get_objects, delete_object, collection, template_match
+from app.utils import get_field_type
 
 
 router = APIRouter(
@@ -21,11 +22,15 @@ router = APIRouter(
 )
 async def get_form(request: Request):
     for _, param_value in request.query_params.items():
-        if param_value not in ['email', 'text', 'phone', 'date']:
+        if not FieldType.contains(param_value):
             raise HTTPException(status_code=422)
     obj = template_match(list(request.query_params.items()), collection)
     if obj:
         return TemplateMatchSuccess(**obj)
+    return {
+        field_name: get_field_type(field_value)
+        for field_name, field_value in request.query_params.items()
+    }
 
 
 @router.get(

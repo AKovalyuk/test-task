@@ -6,3 +6,6 @@ env:
 
 lint:
 	poetry run pylint --fail-under=9 app test
+
+run:
+	docker-compose up -d
