@@ -4,7 +4,7 @@ from fastapi import APIRouter, Path, Query, Request, Depends, Body, HTTPExceptio
 from starlette import status
 
 from app.dependencies import Pagination, pagination_dependency
-from app.schemas import TemplateOut, TemplateIn, TemplateMatchSuccess, FieldType
+from app.schemas import TemplateOut, TemplateIn, TemplateMatchSuccess, FieldType, ObjectId
 from app.db import insert_object, get_object, get_objects, delete_object, collection
 
 
@@ -41,7 +41,7 @@ async def get_templates(
     status_code=status.HTTP_200_OK,
 )
 async def get_template(
-        template_id: Annotated[str, Path(di)],  # ObjectId
+        template_id: Annotated[ObjectId, Path()],  # ObjectId
 ) -> TemplateOut:
     found_object = get_object(template_id, collection)
     if not found_object:
@@ -65,6 +65,6 @@ async def create_template(
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_template(
-        template_id: Annotated[str, Path()],
+        template_id: Annotated[ObjectId, Path()],
 ):
     delete_object(template_id, collection)

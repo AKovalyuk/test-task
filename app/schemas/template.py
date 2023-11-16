@@ -1,8 +1,17 @@
-from typing import Dict, Literal, Any
+from typing import Dict, Literal, Any, Annotated
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, AfterValidator
+from bson import ObjectId as _ObjectId
+
+
+def validate_object_id(value: str) -> str:
+    if not _ObjectId.is_valid(value):
+        raise ValueError('Invalid ObjectId')
+    return value
+
 
 FieldType = Literal["email", "phone", "date", "text"]
+ObjectId = Annotated[str, AfterValidator(validate_object_id)]
 
 
 class TemplateMatchSuccess(BaseModel):

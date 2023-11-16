@@ -1,4 +1,5 @@
 from pytest import mark
+from bson import ObjectId
 
 
 @mark.parametrize(
@@ -25,3 +26,22 @@ async def test_get_multiple(data, client, page, size, excepted_count):
         assert response.status_code == 422
     else:
         assert len(response.json()) == excepted_count
+
+
+async def test_bad_id(data, client):
+    response = await client.get('/template/fake_id')
+    assert response.status_code == 422
+
+
+async def test_not_found(data, client):
+    response = await client.get(f'/template/{ObjectId()}')
+    assert response.status_code == 404
+
+
+@mark.parametrize(
+    "index",
+    [0, 1, 2]
+)
+async def test_get_one(data, client, index):
+    response = await client.get(f'/template/{data[index]["id"]}')
+    assert response.json() == data[index]
