@@ -6,3 +6,6 @@ env:
 
 lint:
 	poetry run pylint --fail-under=9 app test
+
+lint-ci:
+	poetry run pylint --fail-under=9 $(git ls-files '*.py')
