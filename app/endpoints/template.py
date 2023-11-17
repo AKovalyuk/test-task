@@ -20,12 +20,14 @@ router = APIRouter(
     path='/get_form',
     status_code=status.HTTP_200_OK,
 )
-async def get_form(request: Request) -> TemplateMatchSuccess | dict[str, FieldType]:
+async def get_form(
+        data: Annotated[dict[str, str], Body()]
+) -> TemplateMatchSuccess | dict[str, FieldType]:
     """Endpoint для поиска подходящего шаблона"""
     # Получение типов полей
     field_types = {
         field_name: get_field_type(field_value)
-        for field_name, field_value in request.query_params.items()
+        for field_name, field_value in data.items()
     }
 
     # Поиск подходящего шаблона в БД
