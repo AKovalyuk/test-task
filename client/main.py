@@ -1,4 +1,7 @@
 from argparse import ArgumentParser
+from json import loads
+
+import httpx
 
 
 BASE_URL = 'http://127.0.0.1:8000'
@@ -30,18 +33,29 @@ def main():
     args = parser.parse_args()
     base_url = args.base_url if args.base_url else BASE_URL
 
-    match args.subparser_name:
-        case 'get':
-            ...
+    # По-хорошему здесь должно быть match-case
+    # Убрал, чтобы можно было тестировать на < 3.10
+    if args.subparser_name == 'get':
+        id_section = f'/{args.id}' if args.id else ''
+        response = httpx.get(f'{base_url}/template{id_section}')
+        print(f'Status code: {response.status_code} Response:')
+        print(response.json())
 
-        case 'create':
-            ...
+    elif args.subparser_name == 'create':
+        parsed_json = loads(args.json)
+        response = httpx.post(f'{base_url}/template', json=parsed_json)
+        print(f'Status code: {response.status_code} Response:')
+        print(response.json())
 
-        case 'delete':
-            ...
+    elif args.subparser_name == 'delete':
+        response = httpx.delete(f'{base_url}/template/{args.id}')
+        print(f'Status code: {response.status_code}')
 
-        case 'get_from':
-            ...
+    else:  # get_form
+        parsed_json = loads(args.json)
+        response = httpx.post(f'{base_url}/get_form', json=parsed_json)
+        print(f'Status code: {response.status_code} Response:')
+        print(response.json())
 
 
 if __name__ == '__main__':

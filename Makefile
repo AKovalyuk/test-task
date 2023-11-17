@@ -8,7 +8,7 @@ env:
 
 # Проверка качества кода
 lint:
-	poetry run pylint --fail-under=9 app test
+	poetry run pylint --fail-under=9 app test client
 
 # Запуск сервиса и БД
 run:
