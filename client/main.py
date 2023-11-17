@@ -14,7 +14,7 @@ def main():
         add_help=True,
     )
     parser.add_argument('--base_url', default=None, help='Базовый URL сервиса')
-    subparsers = parser.add_subparsers(dest='subparser_name')
+    subparsers = parser.add_subparsers(dest='subparser_name', required=True)
 
     get_parser = subparsers.add_parser('get', add_help=True)
     get_parser.add_argument('--id', required=False, default=None,
@@ -51,7 +51,7 @@ def main():
         response = httpx.delete(f'{base_url}/template/{args.id}')
         print(f'Status code: {response.status_code}')
 
-    else:  # get_form
+    elif args.subparser_name == 'get_form':
         parsed_json = loads(args.json)
         response = httpx.post(f'{base_url}/get_form', json=parsed_json)
         print(f'Status code: {response.status_code} Response:')

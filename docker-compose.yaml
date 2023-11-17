@@ -8,9 +8,9 @@ services:
       args:
         APP_WORKDIR: "/app"
     volumes:
-      # Для разработки (read-only чтобы не портить venv)
+      # Для разработки
       - .:/app:ro
-      # Исключение venv директории
+      # Исключение venv директории (чтобы не портить venv)
       - /app/.venv
     ports:
       - "${APP_PORT}:${APP_PORT}"
@@ -25,10 +25,10 @@ services:
     container_name: db
     image: mongo:6
     volumes:
-      - mongo_data_:/data/db
+      - mongo_data__:/data/db
     env_file:
       - .env
     restart: always
 
 volumes:
-  mongo_data_:
+  mongo_data__:
