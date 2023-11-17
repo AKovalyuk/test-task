@@ -35,7 +35,7 @@ def check_email(value: str) -> bool:
         return True
     except PydanticCustomError:
         ...
-    return True
+    return False
 
 
 FIELD_TYPE_PATTERN_PRIORITY = [

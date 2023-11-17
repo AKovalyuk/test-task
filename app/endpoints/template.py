@@ -21,16 +21,14 @@ router = APIRouter(
     response_model=TemplateMatchSuccess | dict[str, FieldType],
 )
 async def get_form(request: Request):
-    for _, param_value in request.query_params.items():
-        if not FieldType.contains(param_value):
-            raise HTTPException(status_code=422)
-    obj = template_match(list(request.query_params.items()), collection)
-    if obj:
-        return TemplateMatchSuccess(**obj)
-    return {
+    field_types = {
         field_name: get_field_type(field_value)
         for field_name, field_value in request.query_params.items()
     }
+    matched_template = template_match(list(field_types.items()), collection)
+    if matched_template:
+        return TemplateMatchSuccess(**matched_template)
+    return field_types
 
 
 @router.get(

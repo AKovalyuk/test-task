@@ -19,10 +19,6 @@ class FieldType(str, Enum):
     EMAIL = 'email'
     TEXT = 'text'
 
-    @classmethod
-    def contains(cls, value):
-        return value in cls.__members__.values()
-
 
 ObjectId = Annotated[str, AfterValidator(validate_object_id)]
 
