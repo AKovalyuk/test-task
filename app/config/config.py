@@ -10,10 +10,10 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
 
-    # Service settings
+    # Настройки сервиса
     APP_PORT: int = int(getenv('APP_PORT', '8000'))
 
-    # Database settings
+    # Настройки соединения с БД
     MONGO_INITDB_ROOT_USERNAME: str = getenv('MONGO_INITDB_ROOT_USERNAME', 'user')
     MONGO_INITDB_ROOT_PASSWORD: str = getenv('MONGO_INITDB_ROOT_PASSWORD', '12345')
     MONGO_DATABASE: str = getenv('MONGO_DATABASE', 'templates')

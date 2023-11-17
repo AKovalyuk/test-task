@@ -8,7 +8,9 @@ services:
       args:
         APP_WORKDIR: "/app"
     volumes:
+      # Для разработки (read-only чтобы не портить venv)
       - .:/app:ro
+      # Исключение venv директории
       - /app/.venv
     ports:
       - "${APP_PORT}:${APP_PORT}"

@@ -1,3 +1,4 @@
+# pylint: disable=missing-function-docstring
 from typing import Annotated
 
 from fastapi import APIRouter, Path, Request, Depends, Body, HTTPException
@@ -18,14 +19,18 @@ router = APIRouter(
 @router.post(
     path='/get_form',
     status_code=status.HTTP_200_OK,
-    response_model=TemplateMatchSuccess | dict[str, FieldType],
 )
-async def get_form(request: Request):
+async def get_form(request: Request) -> TemplateMatchSuccess | dict[str, FieldType]:
+    """Endpoint для поиска подходящего шаблона"""
+    # Получение типов полей
     field_types = {
         field_name: get_field_type(field_value)
         for field_name, field_value in request.query_params.items()
     }
+
+    # Поиск подходящего шаблона в БД
     matched_template = template_match(list(field_types.items()), collection)
+
     if matched_template:
         return TemplateMatchSuccess(**matched_template)
     return field_types
